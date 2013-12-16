@@ -15,7 +15,12 @@
  ******************************************************************************/
 package eu.trentorise.smartcampus.services.ordinanzerovereto.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +33,61 @@ public class Script {
 
 	@SuppressWarnings("unchecked")
 	public List<?> createOrdinanze(String data) {
+		List<Ordinanza> result = new ArrayList<Ordinanza>();
+		try {
+			List<Map> list = new ObjectMapper().readValue(data, List.class);
+			for (Map<String,Object> ord : list) {
+				Ordinanza.Builder builder = Ordinanza.newBuilder();
+				builder.setId(ord.get("DIR_DOCIDE").toString());
+				builder.setAl(convertDate(ord.get("PERIODO_AL").toString()));
+				builder.setDal(convertDate(ord.get("PERIODO_DAL").toString()));
+				builder.setData(convertDate(ord.get("REG_DATA").toString()));
+				builder.setOgetto(ord.get("DOC_OGG").toString());
+				builder.setStato(ord.get("STATO_ORDINANZA").toString());
+				builder.setTipologia(ord.get("TIPO_ORDINANZA").toString());
+				List<Map<String,Object>> vie = (List<Map<String, Object>>) ord.get("VIE");
+				List<Via> vieList = new ArrayList<Via>();
+				if (vie != null) {
+					for (Map<String,Object> viaMap : vie) {
+						if (viaMap.get("LATITUDINE") == null || viaMap.get("LONGITUDINE").toString().isEmpty()) continue;
+						Via via = Via.newBuilder()
+								.setAlCivico(notNull(viaMap.get("AL_CIVICO")).toString())
+								.setAlIntersezione(notNull(viaMap.get("ALL_INTERSEZIONE")).toString())
+								.setCodiceVia(notNull(viaMap.get("COD_VIA")).toString())
+								.setDalCivico(notNull(viaMap.get("DAL_CIVICO")).toString())
+								.setDalIntersezione(notNull(viaMap.get("DALL_INTERSEZIONE")).toString())
+								.setNote(notNull(viaMap.get("NOTA_VIA")).toString())
+								.setDescrizioneVia(notNull(viaMap.get("NTV_DESCR")).toString())
+								.setLat(Double.parseDouble((viaMap.get("LATITUDINE")).toString()))
+								.setLng(Double.parseDouble((viaMap.get("LONGITUDINE")).toString()))
+								.setTipologia(notNull(viaMap.get("TIPOLOGIA")).toString())
+								.build();
+						vieList.add(via);
+					}
+					builder.addAllVie(vieList);
+				}
+				result.add(builder.build());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	private String convertDate(String date) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+		Date newDate = sdf.parse(date);
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(newDate);
+		return cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR);
+	}
+	
+	private Object notNull(Object s) {
+		return s == null ? "" : s;
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public List<?> oldCreateOrdinanze(String data) {
 		List<Ordinanza> result = new ArrayList<Ordinanza>();
 		String txt = preprocess(data);
 		try {
@@ -90,6 +150,7 @@ public class Script {
 		while (txt.indexOf("\"dal\"") >= 0) {
 			txt = txt.replaceFirst("\"dal\"", "\"from\"");
 			txt = txt.replaceFirst("\"dal\"", "\"to\"");
+			txt = txt.replaceFirst("\"al\"", "\"to\"");
 		}
 		
 		
