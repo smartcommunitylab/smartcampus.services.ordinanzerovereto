@@ -14,8 +14,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<service-definition xmlns="http://www.example.org/interface-schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.example.org/interface-schema ../interface-schema.xsd ">
+<service-definition xmlns="http://smart.sayservice.it/schema/interface-schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://smart.sayservice.it/schema/interface-schema http://smart.sayservice.it/schema/interface-schema-1.7.xsd ">	
 	<interface serviceURI="eu.trentorise.smartcampus.services.ordinanzerovereto.OrdinanzeRoveretoService">
 		<operation name="GetOrdinanze">
 			<output

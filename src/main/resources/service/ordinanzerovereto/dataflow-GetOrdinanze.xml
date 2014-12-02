@@ -14,8 +14,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<dataflow xmlns="http://www.example.org/mml-schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.example.org/mml-schema mml-schema.xsd ">
+<dataflow xmlns="http://smart.sayservice.it/schema/dataflow-schema"	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://smart.sayservice.it/schema/dataflow-schema http://smart.sayservice.it/schema/dataflow-schema-1.7.xsd">
 
 	<variable name="data" type="String" />
 

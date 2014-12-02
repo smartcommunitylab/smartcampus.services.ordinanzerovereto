@@ -15,7 +15,8 @@ import bsh.EvalError;
 import bsh.ParseException;
 import bsh.TargetError;
 import com.google.protobuf.Message;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import it.sayservice.platform.core.bus.common.exception.*;
 import javax.script.ScriptException;
 import it.sayservice.platform.core.bus.service.ServiceMethod;
@@ -37,7 +38,7 @@ import it.sayservice.platform.core.message.ProtoBean;
 */
 public class GetOrdinanzeDataFlow implements ServiceDataFlow {
 
-	Logger log = Logger.getLogger(this.getClass());
+	private final transient Log log = LogFactory.getLog(this.getClass());
 
 
 	private String data;
@@ -68,7 +69,7 @@ public class GetOrdinanzeDataFlow implements ServiceDataFlow {
 		connector.setEncoding("ISO-8859-1");
 
 		//Connect
-		connector.setUrl((String)InvokeScript.invoke("\"http://www2.comune.rovereto.tn.it/iride/extra/ordinanze_gps/\"", contextVariables));
+		connector.setUrl((String)InvokeScript.invoke("\"http://www2.comune.rovereto.tn.it/iride/extra/ordinanze_gps/json/\"", contextVariables));
 		try {
 			InvokeConnector<java.io.Reader> connectorInvoker = new InvokeConnector<java.io.Reader>();
 			java.io.Reader connectResult1 = connectorInvoker.invoke(connector, "connector", "data", serviceExecutionId, serviceMethod);

@@ -14,7 +14,8 @@
     default-lazy-init="false">
 
 
-    <osgi:service id="eu.trentorise.smartcampus.services.ordinanzerovereto.OrdinanzeRoveretoService" interface="it.sayservice.platform.core.bus.service.ServiceEngineInterface">
+    <osgi:service id="eu.trentorise.smartcampus.services.ordinanzerovereto.OrdinanzeRoveretoService" 
+    	interface="it.sayservice.platform.core.bus.service.ServiceEngineInterface">
         <bean id="eu.trentorise.smartcampus.services.ordinanzerovereto.OrdinanzeRoveretoService" class="eu.trentorise.smartcampus.services.ordinanzerovereto.impl.ServiceImpl">
             <constructor-arg>
                 <map>

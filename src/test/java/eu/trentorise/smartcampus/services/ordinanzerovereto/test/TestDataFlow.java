@@ -26,7 +26,7 @@ import eu.trentorise.smartcampus.services.ordinanzerovereto.impl.GetOrdinanzeDat
 public class TestDataFlow {
 
 	public static void main(String[] args) throws ServiceException {
-		DataFlowTestHelper helper = new DataFlowTestHelper();
+		DataFlowTestHelper helper = new DataFlowTestHelper("test");
 		Map<String,Object> map = new HashMap<String, Object>();
 		Map<String, Object> out = helper.executeDataFlow(
 				"eu.trentorise.smartcampus.services.ordinanzerovereto.OrdinanzeroveretoService", 

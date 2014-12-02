@@ -24,8 +24,8 @@ public class GetOrdinanzeServiceValidation extends AbstractServiceValidationImpl
 	private String serviceURI = null;
 	private String operation = null;
 
-	public GetOrdinanzeServiceValidation(String serviceId, String methodName, PersistenceEngine persistenceEngine) throws Exception {
-		super(serviceId, methodName, persistenceEngine, "service/ordinanzerovereto/validation-GetOrdinanze.xml");
+	public GetOrdinanzeServiceValidation(String serviceId, String methodName, PersistenceEngine persistenceEngine, ClassLoader thatClassLoader) throws Exception {
+		super(serviceId, methodName, persistenceEngine, "service/ordinanzerovereto/validation-GetOrdinanze.xml", thatClassLoader);
 		init();
 	}
 
